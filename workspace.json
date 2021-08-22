@@ -1,0 +1,76 @@
+{
+  "version": 2,
+  "projects": {
+    "nx-anchor": {
+      "root": "packages/nx-anchor",
+      "sourceRoot": "packages/nx-anchor/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-anchor/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nx-anchor"],
+          "options": {
+            "jestConfig": "packages/nx-anchor/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-anchor",
+            "tsConfig": "packages/nx-anchor/tsconfig.lib.json",
+            "packageJson": "packages/nx-anchor/package.json",
+            "main": "packages/nx-anchor/src/index.ts",
+            "assets": [
+              "packages/nx-anchor/*.md",
+              {
+                "input": "./packages/nx-anchor/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-anchor/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-anchor",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-anchor",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-anchor-e2e": {
+      "root": "e2e/nx-anchor-e2e",
+      "projectType": "application",
+      "sourceRoot": "e2e/nx-anchor-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-anchor:build",
+            "jestConfig": "e2e/nx-anchor-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}
