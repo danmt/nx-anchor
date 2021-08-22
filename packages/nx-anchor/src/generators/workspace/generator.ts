@@ -2,14 +2,15 @@ import {
   addDependenciesToPackageJson,
   addProjectConfiguration,
   formatFiles,
+  generateFiles,
   getWorkspaceLayout,
   names,
+  offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
-
-import { fromCommand } from '../../utils';
+import * as path from 'path';
+import { toCrateName } from '../../utils';
 import { WorkspaceGeneratorSchema } from './schema';
-import * as fs from 'fs';
 
 interface NormalizedSchema extends WorkspaceGeneratorSchema {
   projectName: string;
@@ -21,7 +22,7 @@ function normalizeOptions(
   options: WorkspaceGeneratorSchema
 ): NormalizedSchema {
   const projectName = names(options.name).fileName;
-  const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectName}`;
+  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectName}`;
 
   return {
     ...options,
@@ -30,16 +31,25 @@ function normalizeOptions(
   };
 }
 
-function initWorkspace(projectName: string, cwd: string) {
-  return fromCommand(`anchor init ${projectName}`, {
-    cwd,
-    monitor: true,
-  }).toPromise();
+function addFiles(tree: Tree, options: NormalizedSchema) {
+  const templateOptions = {
+    ...options,
+    ...names(options.name),
+    offsetFromRoot: offsetFromRoot(options.projectRoot),
+    template: '',
+    dot: '.',
+    crateName: toCrateName(options.name),
+  };
+  generateFiles(
+    tree,
+    path.join(__dirname, 'files'),
+    options.projectRoot,
+    templateOptions
+  );
 }
 
 export default async function (tree: Tree, options: WorkspaceGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  // Add project configuration with its custom executors
   addProjectConfiguration(tree, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
@@ -73,11 +83,6 @@ export default async function (tree: Tree, options: WorkspaceGeneratorSchema) {
     { '@project-serum/anchor': 'latest' },
     { mocha: 'latest' }
   );
-  // Call init
-  await initWorkspace(
-    normalizedOptions.projectName,
-    getWorkspaceLayout(tree).libsDir
-  );
-  fs.rmdirSync(`${normalizedOptions.projectRoot}/app`);
+  addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
