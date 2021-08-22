@@ -79,6 +79,13 @@
             "projectPath": "./apps/example",
             "monitor": true
           }
+        },
+        "deploy": {
+          "executor": "./dist/packages/nx-anchor:deploy",
+          "options": {
+            "projectPath": "./apps/example",
+            "monitor": true
+          }
         }
       }
     }
