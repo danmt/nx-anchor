@@ -36,6 +36,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...names(options.name),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
+    dot: '.',
   };
   generateFiles(
     tree,

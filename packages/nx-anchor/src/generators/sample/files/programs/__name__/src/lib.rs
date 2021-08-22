@@ -1,9 +1,9 @@
 use anchor_lang::prelude::*;
 
 #[program]
-pub mod qwe {
+pub mod __name__ {
     use super::*;
-    pub fn initialize(ctx: Context<Initialize>) -> ProgramResult {
+    pub fn initialize(_ctx: Context<Initialize>) -> ProgramResult {
         Ok(())
     }
 }
