@@ -9,10 +9,10 @@ export default async function runExecutor(options: DeployExecutorSchema) {
   logger.info(`Executing "deploy"...`);
   logger.info(`Options: ${JSON.stringify(options, null, 2)}`);
 
-  return fromCommand(
-    `cd ${options.projectPath} && anchor deploy`,
-    options.monitor
-  )
+  return fromCommand(`anchor deploy`, {
+    monitor: options.monitor,
+    cwd: options.projectPath,
+  })
     .pipe(
       map(() => ({ success: true })),
       catchError(() => of({ success: false }))

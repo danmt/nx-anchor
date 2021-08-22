@@ -68,33 +68,6 @@
           }
         }
       }
-    },
-    "example": {
-      "root": "apps/example",
-      "projectType": "application",
-      "targets": {
-        "build": {
-          "executor": "./dist/packages/nx-anchor:build",
-          "options": {
-            "projectPath": "./apps/example",
-            "monitor": true
-          }
-        },
-        "test": {
-          "executor": "./dist/packages/nx-anchor:test",
-          "options": {
-            "projectPath": "./apps/example",
-            "monitor": true
-          }
-        },
-        "deploy": {
-          "executor": "./dist/packages/nx-anchor:deploy",
-          "options": {
-            "projectPath": "./apps/example",
-            "monitor": true
-          }
-        }
-      }
     }
   },
   "cli": {

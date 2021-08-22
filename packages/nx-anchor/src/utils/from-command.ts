@@ -3,9 +3,15 @@ import { spawn } from 'child_process';
 import { combineLatest, fromEvent, merge, of, throwError } from 'rxjs';
 import { first, switchMap, tap } from 'rxjs/operators';
 
-export const fromCommand = (command: string, monitor = false) => {
+export interface CommandOptions {
+  monitor?: boolean;
+  cwd?: string;
+}
+
+export const fromCommand = (command: string, options: CommandOptions = {}) => {
   const spawnee = spawn(command, {
     shell: true,
+    cwd: options.cwd || '.',
   });
 
   const stdout$ = fromEvent(spawnee.stdout, 'data').pipe(
@@ -24,7 +30,7 @@ export const fromCommand = (command: string, monitor = false) => {
   );
 
   return combineLatest([
-    monitor ? merge(stdout$, stderr$) : of(null),
+    options.monitor ? merge(stdout$, stderr$) : of(null),
     merge(close$, error$),
   ]).pipe(first());
 };
