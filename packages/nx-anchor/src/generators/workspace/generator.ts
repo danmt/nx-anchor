@@ -22,7 +22,7 @@ function normalizeOptions(
   options: WorkspaceGeneratorSchema
 ): NormalizedSchema {
   const projectName = names(options.name).fileName;
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectName}`;
+  const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectName}`;
 
   return {
     ...options,
