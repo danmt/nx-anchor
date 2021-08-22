@@ -27,6 +27,8 @@
   },
   "private": true,
   "dependencies": {
+    "@project-serum/anchor": "^0.13.2",
+    "rxjs": "^6.6.7",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

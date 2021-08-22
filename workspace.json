@@ -68,6 +68,19 @@
           }
         }
       }
+    },
+    "example": {
+      "root": "apps/example",
+      "projectType": "application",
+      "targets": {
+        "test": {
+          "executor": "./dist/packages/nx-anchor:test",
+          "options": {
+            "projectPath": "./apps/example",
+            "monitor": true
+          }
+        }
+      }
     }
   },
   "cli": {
