@@ -1,4 +1,6 @@
 import { logger } from '@nrwl/devkit';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { fromCommand } from '../../utils';
 import { TestExecutorSchema } from './schema';
@@ -10,5 +12,10 @@ export default async function runExecutor(options: TestExecutorSchema) {
   return fromCommand(
     `cd ${options.projectPath} && anchor test`,
     options.monitor
-  ).toPromise();
+  )
+    .pipe(
+      map(() => ({ success: true })),
+      catchError(() => of({ success: false }))
+    )
+    .toPromise();
 }

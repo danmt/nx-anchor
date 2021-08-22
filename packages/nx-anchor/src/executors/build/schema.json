@@ -4,6 +4,16 @@
   "title": "Build executor",
   "description": "",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "projectPath": {
+      "type": "string",
+      "description": "The path to the project"
+    },
+    "monitor": {
+      "type": "boolean",
+      "description": "Print logs from command",
+      "default": false
+    }
+  },
   "required": []
 }

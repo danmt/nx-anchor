@@ -1,7 +1,7 @@
 import { logger } from '@nrwl/devkit';
 import { spawn } from 'child_process';
 import { combineLatest, fromEvent, merge, of, throwError } from 'rxjs';
-import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
+import { first, switchMap, tap } from 'rxjs/operators';
 
 export const fromCommand = (command: string, monitor = false) => {
   const spawnee = spawn(command, {
@@ -26,9 +26,5 @@ export const fromCommand = (command: string, monitor = false) => {
   return combineLatest([
     monitor ? merge(stdout$, stderr$) : of(null),
     merge(close$, error$),
-  ]).pipe(
-    map(() => ({ success: true })),
-    catchError(() => of({ success: false })),
-    first()
-  );
+  ]).pipe(first());
 };

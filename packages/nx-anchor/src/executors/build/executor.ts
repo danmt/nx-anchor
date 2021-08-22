@@ -1,8 +1,21 @@
+import { logger } from '@nrwl/devkit';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+import { fromCommand } from '../../utils';
 import { BuildExecutorSchema } from './schema';
 
 export default async function runExecutor(options: BuildExecutorSchema) {
-  console.log('Executor ran for Build', options);
-  return {
-    success: true,
-  };
+  logger.info(`Executing "build"...`);
+  logger.info(`Options: ${JSON.stringify(options, null, 2)}`);
+
+  return fromCommand(
+    `cd ${options.projectPath} && anchor build`,
+    options.monitor
+  )
+    .pipe(
+      map(() => ({ success: true })),
+      catchError(() => of({ success: false }))
+    )
+    .toPromise();
 }
