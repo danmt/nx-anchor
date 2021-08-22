@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[program]
-pub mod <%= name %> {
+pub mod <%= crateName %> {
     use super::*;
     pub fn initialize(_ctx: Context<Initialize>) -> ProgramResult {
         Ok(())

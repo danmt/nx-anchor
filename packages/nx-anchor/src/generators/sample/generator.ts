@@ -9,6 +9,7 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
+import { toCrateName } from '../../utils';
 import { SampleGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends SampleGeneratorSchema {
@@ -37,6 +38,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
     dot: '.',
+    crateName: toCrateName(options.name),
   };
   generateFiles(
     tree,

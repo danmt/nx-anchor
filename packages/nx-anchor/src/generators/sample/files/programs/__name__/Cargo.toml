@@ -1,12 +1,12 @@
 [package]
-name = "<%= name %>"
+name = "<%= crateName %>"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2018"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "<%= name %>"
+name = "<%= crateName %>"
 
 [features]
 no-entrypoint = []
