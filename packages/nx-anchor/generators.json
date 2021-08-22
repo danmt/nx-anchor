@@ -3,11 +3,6 @@
   "name": "nx-anchor",
   "version": "0.0.1",
   "generators": {
-    "nx-anchor": {
-      "factory": "./src/generators/nx-anchor/generator",
-      "schema": "./src/generators/nx-anchor/schema.json",
-      "description": "nx-anchor generator"
-    },
     "workspace": {
       "factory": "./src/generators/workspace/generator",
       "schema": "./src/generators/workspace/schema.json",
