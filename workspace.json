@@ -31,7 +31,7 @@
             "assets": [
               "packages/nx-anchor/*.md",
               {
-                "input": "./packages/nx-anchor/src",
+                "input": "packages/nx-anchor/src",
                 "glob": "**/!(*.ts)",
                 "output": "./src"
               },

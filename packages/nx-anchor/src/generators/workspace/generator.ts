@@ -1,5 +1,4 @@
 import {
-  addDependenciesToPackageJson,
   addProjectConfiguration,
   formatFiles,
   generateFiles,
@@ -9,7 +8,8 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
-import { toCrateName } from '../../utils';
+
+import { addPackages, toCrateName } from '../../utils';
 import { WorkspaceGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends WorkspaceGeneratorSchema {
@@ -78,11 +78,7 @@ export default async function (tree: Tree, options: WorkspaceGeneratorSchema) {
     },
   });
   // Add the main dependencies from an anchor workspace
-  addDependenciesToPackageJson(
-    tree,
-    { '@project-serum/anchor': 'latest' },
-    { mocha: 'latest' }
-  );
+  addPackages(tree);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
